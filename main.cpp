@@ -90,9 +90,21 @@ int main(){
     vector<Movie *> movies; 
     ifstream file;
     file.open("data.txt");
-    if(!file.is_open()){
-        
+    if(!file.good()){
+        string line;
+        while (getline(file, line))
+            while() //new movie
+            //currently adding reviews?
+            //yes
+            
+            //no
+                //movie title
+
+            movies.push_back();
+        file.close();
     }
+    else
+        cout<<"File not found.\n";
 
 
 
