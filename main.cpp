@@ -49,12 +49,9 @@ class Movie{
         cout<<"\t\tAverage: "<<  sum/(count-1)<<"\n\n"; 
     }
 //input reviews:
-    void promptReviews(Review *& R){
-        float rating;
-        string comment;
-        char yesno;
+    void promptReviews(){
         R = nullptr;
-        Review* ReviewPtr = R;
+        Review* ReviewPtr = reviews;
         while(true){
             cout<<"Enter review rating 0-5: ";
             cin>> rating;
@@ -82,6 +79,17 @@ class Movie{
             return;
         }
     }
+    void inputReview(float rating, string comment){
+        if(!reviews){ //empty head
+            reviews = new Review(rating, comment);
+        }
+        else{
+            
+            
+            reviews->next=new Review(rating, comment);
+            reviews = 
+        }
+    }
 };
 
 void outputAll(vector<Movie*> mVect);
@@ -93,7 +101,13 @@ int main(){
     if(!file.good()){
         string line;
         while (getline(file, line))
-            while() //new movie
+            Movie * M = new Movie(line);
+            while(line!="/-")
+                getline(file,line);
+                M->inputReview();
+                 
+                
+            //new movie
             //currently adding reviews?
             //yes
             
