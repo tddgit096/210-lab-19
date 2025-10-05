@@ -66,27 +66,19 @@ int main(){
     vector<Movie *> movies; 
     ifstream file;
     file.open("data.txt");
-    if(!file.good()){
+    if(file.good()){
         string line;
-        while (getline(file, line))
-            
+        while (getline(file, line)){
             Movie * M = new Movie(line);
-            string line2;
-            while(line!="/-")
+            getline(file,line);
+            cout<<line<<endl;//test
+            while(line!="-"){
+                float rating = stof(line);
                 getline(file,line);
-                getline(file,line2);
-                M->inputReview(stoi(line),line2);
-
-                 
-                
-            //new movie
-            //currently adding reviews?
-            //yes
-            
-            //no
-                //movie title
-
-            movies.push_back();
+                M->inputReview(rating,line);
+            }
+            movies.push_back(M);
+        }           
         file.close();
     }
     else
