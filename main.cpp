@@ -66,7 +66,7 @@ void parseRawInput(vector<string>, vector<Movie*>&); //takes string values from 
 int main(){
     vector<Movie *> movies; 
     ifstream file;
-    vector<string> inputVect;
+    vector<string> inputVect; //vector stores raw string data, manipulated by parseRawInput() later in main to create movie instances.
     file.open("data.txt");
     if(file.good()){
         string line;
@@ -77,7 +77,6 @@ int main(){
     else
         cout<<"File not found.\n";
 
-    //parse input array
     parseRawInput(inputVect, movies);
     outputAll(movies);
     return 0;
