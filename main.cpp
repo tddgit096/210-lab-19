@@ -68,10 +68,10 @@ int main(){
     file.open("data.txt");
     if(file.good()){
         string line;
-        while (getline(file, line)){
+        while (getline(file,line)){
+            getline(file,line);
             Movie * M = new Movie(line);
             getline(file,line);
-            cout<<line<<endl;//test
             while(line!="-"){
                 float rating = stof(line);
                 getline(file,line);
@@ -84,6 +84,8 @@ int main(){
     else
         cout<<"File not found.\n";
 
+
+        /**/
 
 
     /*
