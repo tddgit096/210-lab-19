@@ -33,7 +33,7 @@ class Movie{
     void output(){
         cout<<"Movie Title: "<<getTitle()<<endl;
         if(!reviews){
-            cout<<"No reviews currently.\n";
+            cout<<"\tNo reviews currently.\n\n";
             return;
         }
         int count = 1;
@@ -60,47 +60,41 @@ class Movie{
     }
 };
 
-void outputAll(vector<Movie*> mVect);
+void outputAll(vector<Movie*> mVect); //calls output on all movie objects in vector.
+void parseRawInput(vector<string>, vector<Movie*>&); //takes string values from data reading in main. Creates movie instances with reviews then stores it into the move array by reference.
 
 int main(){
     vector<Movie *> movies; 
     ifstream file;
+    vector<string> inputVect;
     file.open("data.txt");
     if(file.good()){
         string line;
-        while (getline(file,line)){
-            getline(file,line);
-            Movie * M = new Movie(line);
-            getline(file,line);
-            while(line!="-"){
-                float rating = stof(line);
-                getline(file,line);
-                M->inputReview(rating,line);
-            }
-            movies.push_back(M);
-        }           
+        while (getline(file,line))
+            inputVect.push_back(line); //store directly into vector to be parsed later.          
         file.close();
     }
     else
         cout<<"File not found.\n";
 
-
-        /**/
-
-
-    /*
-    //testcode, replace with data reader from file.
-    for(int i=0;i<2;i++){
-        cout<<"Input title of Movie #"<<i+1<<": ";
-        string title;
-        cin.ignore();
-        getline(cin,title);
-        movies.push_back(new Movie(title)); //this will prompt review entry
-    }
-    */
-    
+    //parse input array
+    parseRawInput(inputVect, movies);
     outputAll(movies);
     return 0;
+}
+
+void parseRawInput(vector<string>inputVect, vector<Movie*>& moVect ){
+    for(int i=0;i<inputVect.size();i++){
+        Movie * M = new Movie(inputVect[i]);
+        i++;
+        while(inputVect[i]!="-"){
+           float rating = stof(inputVect[i]);
+           i++;
+           M->inputReview(rating,inputVect[i]);
+           i++;
+        }
+        moVect.push_back(M);
+    }
 }
 
 void outputAll(vector<Movie*> mVect){
