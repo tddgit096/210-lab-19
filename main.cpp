@@ -1,11 +1,11 @@
 //COMSC 210 | Lab 19| Toma Dimov
 //TODO
 //read review comments from external file
-//main() container of movie objects. can be array ,vector, linked list.
 //write a driver/demo program that will have at least 4 movie objs with at least 3 reviews.
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 struct Review{
@@ -16,9 +16,6 @@ struct Review{
     Review(){}
     Review(float rating,string comment){this->rating=rating;this->comment=comment;next=nullptr;}
 };
-//prototype functions
-Review * promptData();
-void output(Review*);
 
 class Movie{
     string title;
@@ -34,8 +31,8 @@ class Movie{
         promptReviews(reviews);    //new movie created, prompt user to input reviews on construction.
     }
 //output reviews
-    void outputReviews(){
-        cout<<"Movie Title: "<<getTitle();
+    void output(){
+        cout<<"Movie Title: "<<getTitle()<<endl;
         if(!reviews){
             cout<<"No reviews currently.\n";
             return;
@@ -87,15 +84,35 @@ class Movie{
     }
 };
 
+void outputAll(vector<Movie*> mVect);
 
 int main(){
     vector<Movie *> movies; 
-    //tempcode, replace with data reader from file.
+    ifstream file;
+    file.open("data.txt");
+    if(!file.is_open()){
+        
+    }
+
+
+
+    /*
+    //testcode, replace with data reader from file.
     for(int i=0;i<2;i++){
         cout<<"Input title of Movie #"<<i+1<<": ";
         string title;
+        cin.ignore();
         getline(cin,title);
         movies.push_back(new Movie(title)); //this will prompt review entry
     }
+    */
+    
+    outputAll(movies);
     return 0;
+}
+
+void outputAll(vector<Movie*> mVect){
+    for(Movie * M : mVect){
+        M->output();
+    }
 }
