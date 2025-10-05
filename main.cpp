@@ -2,10 +2,10 @@
 //TODO
 //read review comments from external file
 //main() container of movie objects. can be array ,vector, linked list.
-//Reviews can be added to head for ease
 //write a driver/demo program that will have at least 4 movie objs with at least 3 reviews.
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
 struct Review{
@@ -85,36 +85,17 @@ class Movie{
             return;
         }
     }
-
 };
 
 
 int main(){
-    Review * head = promptData();
-    output(head);
+    vector<Movie *> movies; 
+    //tempcode, replace with data reader from file.
+    for(int i=0;i<2;i++){
+        cout<<"Input title of Movie #"<<i+1<<": ";
+        string title;
+        getline(cin,title);
+        movies.push_back(new Movie(title)); //this will prompt review entry
+    }
     return 0;
-}
-
-//prompts user to enter ratings / comments
-Review * promptData(){
-  
-}
-//Outputs data in order and outputs the average of ratings.
-void output(Review* head){
-    if(!head){
-        cout<<"List is empty.\n";
-        return;
-    }
-    cout<<"Outputting all reviews: \n";
-    int count = 1;
-    float sum = 0;
-    Review *ReviewPtr = head;
-    while(ReviewPtr){
-        cout<<"Review #"<<count<<": "<<ReviewPtr->rating<<" :   \""<<ReviewPtr->comment<<"\"\n";
-        sum+=ReviewPtr->rating;
-        ReviewPtr=ReviewPtr->next;
-        count++;
-    }
-    cout<<"Average: "<<  sum/(count-1); 
-    cout<<endl;
 }
