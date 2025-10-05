@@ -29,27 +29,62 @@ class Movie{
     void setTitle(string t){title=t;}
     string getTitle(){return title;}
 //constructors
-    //new movie created, prompt user to input reviews.
+    Movie(string title){
+        setTitle(title);
+        promptReviews(reviews);    //new movie created, prompt user to input reviews on construction.
+    }
 //output reviews
     void outputReviews(){
+        cout<<"Movie Title: "<<getTitle();
         if(!reviews){
-        cout<<"List is empty.\n";
-        return;
-    }
-    cout<<"Outputting all reviews: \n";
-    int count = 1;
-    float sum = 0;
-    Review *ReviewPtr = reviews;
-    while(ReviewPtr){
-        cout<<"Review #"<<count<<": "<<ReviewPtr->rating<<" :   \""<<ReviewPtr->comment<<"\"\n";
-        sum+=ReviewPtr->rating;
-        ReviewPtr=ReviewPtr->next;
-        count++;
-    }
-    cout<<"Average: "<<  sum/(count-1); 
-    cout<<endl;
+            cout<<"No reviews currently.\n";
+            return;
+        }
+        int count = 1;
+        float sum = 0;
+        Review *ReviewPtr = reviews;
+        while(ReviewPtr){
+            cout<<"\tReview #"<<count<<": "<<ReviewPtr->rating<<" :   \""<<ReviewPtr->comment<<"\"\n";
+            sum+=ReviewPtr->rating;
+            ReviewPtr=ReviewPtr->next;
+            count++;
+        }
+        cout<<"\t\tAverage: "<<  sum/(count-1)<<"\n\n"; 
     }
 //input reviews:
+    void promptReviews(Review *& R){
+        float rating;
+        string comment;
+        char yesno;
+        R = nullptr;
+        Review* ReviewPtr = R;
+        while(true){
+            cout<<"Enter review rating 0-5: ";
+            cin>> rating;
+            if(rating<0)
+                rating=0;
+            if(rating>5)
+                rating=5;
+            cout<<"Enter review comments: ";
+            cin.ignore();
+            getline(cin, comment);
+            Review * N = new Review(rating,comment);
+            if(!R){
+                R=N;
+                N->next=nullptr;
+                ReviewPtr=N;
+            }
+            else{
+                N->next = R;
+                R=N;
+            }
+            cout<<"Enter another review? Y/N: ";
+            cin>>yesno;
+            if(tolower(yesno) == 'y')
+                continue;    
+            return;
+        }
+    }
 
 };
 
@@ -62,38 +97,7 @@ int main(){
 
 //prompts user to enter ratings / comments
 Review * promptData(){
-    float rating;
-    string comment;
-    char yesno;
-    Review* head = nullptr;
-    Review* ReviewPtr=head;
-    while(true){
-        cout<<"Enter review rating 0-5: ";
-        cin>> rating;
-        if(rating<0)
-            rating=0;
-        if(rating>5)
-            rating=5;
-        cout<<"Enter review comments: ";
-        cin.ignore();
-        getline(cin, comment);
-//check mode here:
-        Review * N = new Review(rating,comment);
-        if(!head){
-            head=N;
-            N->next=nullptr;
-            ReviewPtr=N;
-        }
-        else{
-            N->next = head;
-            head=N;
-        }
-        cout<<"Enter another review? Y/N: ";
-        cin>>yesno;
-        if(tolower(yesno) == 'y')
-            continue;    
-        return head;
-    }
+  
 }
 //Outputs data in order and outputs the average of ratings.
 void output(Review* head){
