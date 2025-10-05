@@ -28,7 +28,6 @@ class Movie{
 //constructors
     Movie(string title){
         setTitle(title);
-        promptReviews(reviews);    //new movie created, prompt user to input reviews on construction.
     }
 //output reviews
     void output(){
@@ -49,45 +48,14 @@ class Movie{
         cout<<"\t\tAverage: "<<  sum/(count-1)<<"\n\n"; 
     }
 //input reviews:
-    void promptReviews(){
-        R = nullptr;
-        Review* ReviewPtr = reviews;
-        while(true){
-            cout<<"Enter review rating 0-5: ";
-            cin>> rating;
-            if(rating<0)
-                rating=0;
-            if(rating>5)
-                rating=5;
-            cout<<"Enter review comments: ";
-            cin.ignore();
-            getline(cin, comment);
-            Review * N = new Review(rating,comment);
-            if(!R){
-                R=N;
-                N->next=nullptr;
-                ReviewPtr=N;
-            }
-            else{
-                N->next = R;
-                R=N;
-            }
-            cout<<"Enter another review? Y/N: ";
-            cin>>yesno;
-            if(tolower(yesno) == 'y')
-                continue;    
-            return;
-        }
-    }
     void inputReview(float rating, string comment){
+        Review * N = new Review(rating,comment);
         if(!reviews){ //empty head
-            reviews = new Review(rating, comment);
+            reviews = N;
         }
         else{
-            
-            
-            reviews->next=new Review(rating, comment);
-            reviews = 
+            N->next = reviews;
+            reviews = N; 
         }
     }
 };
@@ -101,10 +69,14 @@ int main(){
     if(!file.good()){
         string line;
         while (getline(file, line))
+            
             Movie * M = new Movie(line);
+            string line2;
             while(line!="/-")
                 getline(file,line);
-                M->inputReview();
+                getline(file,line2);
+                M->inputReview(stoi(line),line2);
+
                  
                 
             //new movie
